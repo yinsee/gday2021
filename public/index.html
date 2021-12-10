@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <title>HODL Commerce</title>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="bitcoin-color.svg" alt="" width="30" height="24">
+                    Online Store
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <span v-if="wallet" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                                    <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                                </svg>
+                                {{wallet.substr(0,6)}}...{{wallet.substr(-4)}}
+                            </span>
+                            <button v-else v-on:click="connect()" class="btn btn-primary">Connect Wallet</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container py-5">
+
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6">
+                    <img src="hoodie.jpg" alt="" class="img-fluid w-100">
+                </div>
+
+                <div class="col">
+                    <h1>Binance Hooodie</h1>
+                    <div class="my-3 display-3">
+                        <em>
+                            "If You Can't Hold, You Won't Be Rich"
+                            <br>
+                            — @cz_binance </em>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <h3 class="m-0 me-3">Price: 0.01 BNB</h3>
+                                    <div class="small text-muted">
+                                        Wallet Balance: <span>{{balance}}</span> BNB
+                                    </div>
+                                </div>
+                                <button v-if="!buying && buyable" v-on:click="purchase()" class="btn btn-lg btn-warning">BUY</button>
+                                <div v-if="buying" class="spinner-border me-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- popup -->
+        <div id="dialog" class="modal fade" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Payment Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script src="client.js"></script>
+
+</html>
